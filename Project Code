@@ -1,0 +1,104 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace sort1
+{
+    public partial class Form1 : Form
+    {
+        int[] randomNumbers1 = new int[1000];
+        int[] randomNumbers2 = new int[1000];
+        int randy;
+        string arry1;
+        string arry2;
+        int place1;
+
+
+        public Form1()
+        {
+            InitializeComponent();
+
+            Random random = new Random();
+            for (int x = 0; x < randomNumbers1.Length; x++)
+            {
+                randy = random.Next(0, 1000);
+                randomNumbers1[x] = randy;
+                randomNumbers2[x] = randy;
+                arry1 = arry1 + " " + randomNumbers1[x];
+                arry2 = arry2 + " " + randomNumbers2[x];
+            }
+
+            randomNumbers1 = randomNumbers2;
+
+            lblFirst.Text = arry1;
+            lblSecond.Text = arry2;
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBegin_Click(object sender, EventArgs e)
+        {
+            arry2 = "";
+            arry1 = "";
+
+            System.Diagnostics.Stopwatch stopWatch = new System.Diagnostics.Stopwatch();
+            stopWatch.Start();
+
+            Array.Sort(randomNumbers2);
+
+            for (int x = 0; x < randomNumbers2.Length; x++)
+            {
+                arry2 = arry2 + " " + randomNumbers2[x];
+            }
+
+            lblSecond.Text = arry2;
+
+            stopWatch.Stop();
+
+            TimeSpan ts = stopWatch.Elapsed;
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
+            txtCompTime.Text = (Convert.ToString(ts));
+
+            stopWatch.Reset();
+
+            stopWatch.Start();
+           
+            int spacer = 0;
+            for (int x = 0; x < randomNumbers1.Length; x++)
+            {
+                for (int y = x; y < randomNumbers1.Length; y++)
+                {
+                    if (randomNumbers1[x] > randomNumbers1[y])
+                    {
+                        spacer = randomNumbers1[x];
+                        randomNumbers1[x] = randomNumbers1[y];
+                        randomNumbers1[y] = spacer;
+
+                    }
+                }
+            }
+            for (int x = 0; x < randomNumbers1.Length; x++)
+            {
+                arry1 = arry1 + " " + randomNumbers1[x];
+            }
+
+            lblFirst.Text = arry1;
+
+            stopWatch.Stop();
+
+            TimeSpan ts2 = stopWatch.Elapsed;
+            txtMyTime.Text = (Convert.ToString(ts2));
+
+        }
+    }
+}
